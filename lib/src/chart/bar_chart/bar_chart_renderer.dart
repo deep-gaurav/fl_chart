@@ -11,13 +11,17 @@ import 'bar_chart_painter.dart';
 
 /// Low level BarChart Widget.
 class BarChartLeaf extends LeafRenderObjectWidget {
-  const BarChartLeaf({Key? key, required this.data, required this.targetData}) : super(key: key);
+  const BarChartLeaf(
+      {Key? key, required this.data, required this.targetData, required this.longPressDuration})
+      : super(key: key);
 
   final BarChartData data, targetData;
 
+  final Duration? longPressDuration;
+
   @override
-  RenderBarChart createRenderObject(BuildContext context) =>
-      RenderBarChart(context, data, targetData, MediaQuery.of(context).textScaleFactor);
+  RenderBarChart createRenderObject(BuildContext context) => RenderBarChart(
+      context, data, targetData, MediaQuery.of(context).textScaleFactor, longPressDuration);
 
   @override
   void updateRenderObject(BuildContext context, RenderBarChart renderObject) {
@@ -36,10 +40,11 @@ class RenderBarChart extends RenderBaseChart<BarTouchResponse> {
     BarChartData data,
     BarChartData targetData,
     double textScale,
+    Duration? longPressDuration,
   )   : _data = data,
         _targetData = targetData,
         _textScale = textScale,
-        super(targetData.barTouchData, context);
+        super(targetData.barTouchData, context, longPressDuration);
 
   BarChartData get data => _data;
   BarChartData _data;

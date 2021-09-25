@@ -16,6 +16,7 @@ class PieChartLeaf extends MultiChildRenderObjectWidget {
     Key? key,
     required this.data,
     required this.targetData,
+    required this.longPressDuration,
   }) : super(
           key: key,
           children: targetData.sections.map((e) => e.badgeWidget).toList(),
@@ -23,13 +24,11 @@ class PieChartLeaf extends MultiChildRenderObjectWidget {
 
   final PieChartData data, targetData;
 
+  final Duration? longPressDuration;
+
   @override
   RenderPieChart createRenderObject(BuildContext context) => RenderPieChart(
-        context,
-        data,
-        targetData,
-        MediaQuery.of(context).textScaleFactor,
-      );
+      context, data, targetData, MediaQuery.of(context).textScaleFactor, longPressDuration);
 
   @override
   void updateRenderObject(BuildContext context, RenderPieChart renderObject) {
@@ -47,11 +46,12 @@ class RenderPieChart extends RenderBaseChart<PieTouchResponse>
         ContainerRenderObjectMixin<RenderBox, MultiChildLayoutParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, MultiChildLayoutParentData>
     implements MouseTrackerAnnotation {
-  RenderPieChart(BuildContext context, PieChartData data, PieChartData targetData, double textScale)
+  RenderPieChart(BuildContext context, PieChartData data, PieChartData targetData, double textScale,
+      Duration? longPressDuration)
       : _data = data,
         _targetData = targetData,
         _textScale = textScale,
-        super(targetData.pieTouchData, context);
+        super(targetData.pieTouchData, context, longPressDuration);
 
   PieChartData get data => _data;
   PieChartData _data;

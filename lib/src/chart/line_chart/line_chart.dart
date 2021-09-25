@@ -10,6 +10,8 @@ class LineChart extends ImplicitlyAnimatedWidget {
   /// Determines how the [LineChart] should be look like.
   final LineChartData data;
 
+  final Duration? longPressDuration;
+
   /// [data] determines how the [LineChart] should be look like,
   /// when you make any change in the [LineChartData], it updates
   /// new values with animation, and duration is [swapAnimationDuration].
@@ -19,6 +21,7 @@ class LineChart extends ImplicitlyAnimatedWidget {
     this.data, {
     Duration swapAnimationDuration = const Duration(milliseconds: 150),
     Curve swapAnimationCurve = Curves.linear,
+    this.longPressDuration,
   }) : super(duration: swapAnimationDuration, curve: swapAnimationCurve);
 
   /// Creates a [_LineChartState]
@@ -46,6 +49,7 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
     return LineChartLeaf(
       data: _withTouchedIndicators(_lineChartDataTween!.evaluate(animation)),
       targetData: _withTouchedIndicators(showingData),
+      longPressDuration: widget.longPressDuration,
     );
   }
 

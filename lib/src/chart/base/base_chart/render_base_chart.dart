@@ -11,10 +11,13 @@ abstract class RenderBaseChart<R extends BaseTouchResponse> extends RenderBox
     implements MouseTrackerAnnotation {
   /// We use [FlTouchData] to retrieve [FlTouchData.touchCallback] and [FlTouchData.mouseCursorResolver]
   /// to invoke them when touch happens.
-  RenderBaseChart(FlTouchData<R>? touchData, BuildContext context) : _buildContext = context {
+  RenderBaseChart(FlTouchData<R>? touchData, BuildContext context, this._longPressDuration)
+      : _buildContext = context {
     updateBaseTouchData(touchData);
     initGestureRecognizers();
   }
+
+  final Duration? _longPressDuration;
 
   // We use buildContext to retrieve Theme data
   BuildContext get buildContext => _buildContext;
@@ -64,7 +67,7 @@ abstract class RenderBaseChart<R extends BaseTouchResponse> extends RenderBox
     _tapGestureRecognizer.onTapCancel = () => _notifyTouchEvent(FlTapCancelEvent());
     _tapGestureRecognizer.onTapUp = (tapUpDetails) => _notifyTouchEvent(FlTapUpEvent(tapUpDetails));
 
-    _longPressGestureRecognizer = LongPressGestureRecognizer();
+    _longPressGestureRecognizer = LongPressGestureRecognizer(duration: _longPressDuration);
     _longPressGestureRecognizer.onLongPressStart =
         (longPressStartDetails) => _notifyTouchEvent(FlLongPressStart(longPressStartDetails));
     _longPressGestureRecognizer.onLongPressMoveUpdate = (longPressMoveUpdateDetails) =>

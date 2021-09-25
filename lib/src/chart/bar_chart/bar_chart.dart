@@ -8,6 +8,8 @@ class BarChart extends ImplicitlyAnimatedWidget {
   /// Determines how the [BarChart] should be look like.
   final BarChartData data;
 
+  final Duration? longPressDuration;
+
   /// [data] determines how the [BarChart] should be look like,
   /// when you make any change in the [BarChartData], it updates
   /// new values with animation, and duration is [swapAnimationDuration].
@@ -17,6 +19,7 @@ class BarChart extends ImplicitlyAnimatedWidget {
     this.data, {
     Duration swapAnimationDuration = const Duration(milliseconds: 150),
     Curve swapAnimationCurve = Curves.linear,
+    this.longPressDuration,
   }) : super(duration: swapAnimationDuration, curve: swapAnimationCurve);
 
   /// Creates a [_BarChartState]
@@ -42,6 +45,7 @@ class _BarChartState extends AnimatedWidgetBaseState<BarChart> {
     return BarChartLeaf(
       data: _withTouchedIndicators(_barChartDataTween!.evaluate(animation)),
       targetData: _withTouchedIndicators(showingData),
+      longPressDuration: widget.longPressDuration,
     );
   }
 

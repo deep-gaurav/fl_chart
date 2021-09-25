@@ -9,6 +9,8 @@ class ScatterChart extends ImplicitlyAnimatedWidget {
   /// Determines how the [ScatterChart] should be look like.
   final ScatterChartData data;
 
+  final Duration? longPressDuration;
+
   /// [data] determines how the [ScatterChart] should be look like,
   /// when you make any change in the [ScatterChartData], it updates
   /// new values with animation, and duration is [swapAnimationDuration].
@@ -18,6 +20,7 @@ class ScatterChart extends ImplicitlyAnimatedWidget {
     this.data, {
     Duration swapAnimationDuration = const Duration(milliseconds: 150),
     Curve swapAnimationCurve = Curves.linear,
+    this.longPressDuration,
   }) : super(duration: swapAnimationDuration, curve: swapAnimationCurve);
 
   /// Creates a [_ScatterChartState]
@@ -43,6 +46,7 @@ class _ScatterChartState extends AnimatedWidgetBaseState<ScatterChart> {
     return ScatterChartLeaf(
       data: _withTouchedIndicators(_scatterChartDataTween!.evaluate(animation)),
       targetData: _withTouchedIndicators(showingData),
+      longPressDuration: widget.longPressDuration,
     );
   }
 

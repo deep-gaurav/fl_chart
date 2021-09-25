@@ -7,6 +7,8 @@ class RadarChart extends ImplicitlyAnimatedWidget {
   /// Determines how the [RadarChart] should be look like.
   final RadarChartData data;
 
+  final Duration? longPressDuration;
+
   /// [data] determines how the [RadarChart] should be look like,
   /// when you make any change in the [RadarChart], it updates
   /// new values with animation, and duration is [swapAnimationDuration].
@@ -17,6 +19,7 @@ class RadarChart extends ImplicitlyAnimatedWidget {
     Key? key,
     Duration swapAnimationDuration = const Duration(milliseconds: 150),
     Curve swapAnimationCurve = Curves.linear,
+    this.longPressDuration,
   }) : super(
           key: key,
           duration: swapAnimationDuration,
@@ -39,6 +42,7 @@ class _RadarChartState extends AnimatedWidgetBaseState<RadarChart> {
     return RadarChartLeaf(
       data: _radarChartDataTween!.evaluate(animation),
       targetData: showingData,
+      longPressDuration: widget.longPressDuration,
     );
   }
 

@@ -11,13 +11,17 @@ import 'radar_chart_painter.dart';
 
 /// Low level RadarChart Widget.
 class RadarChartLeaf extends LeafRenderObjectWidget {
-  const RadarChartLeaf({Key? key, required this.data, required this.targetData}) : super(key: key);
+  const RadarChartLeaf(
+      {Key? key, required this.data, required this.targetData, required this.longPressDuration})
+      : super(key: key);
 
   final RadarChartData data, targetData;
 
+  final Duration? longPressDuration;
+
   @override
-  RenderRadarChart createRenderObject(BuildContext context) =>
-      RenderRadarChart(context, data, targetData, MediaQuery.of(context).textScaleFactor);
+  RenderRadarChart createRenderObject(BuildContext context) => RenderRadarChart(
+      context, data, targetData, MediaQuery.of(context).textScaleFactor, longPressDuration);
 
   @override
   void updateRenderObject(BuildContext context, RenderRadarChart renderObject) {
@@ -31,12 +35,12 @@ class RadarChartLeaf extends LeafRenderObjectWidget {
 
 /// Renders our RadarChart, also handles hitTest.
 class RenderRadarChart extends RenderBaseChart<RadarTouchResponse> {
-  RenderRadarChart(
-      BuildContext context, RadarChartData data, RadarChartData targetData, double textScale)
+  RenderRadarChart(BuildContext context, RadarChartData data, RadarChartData targetData,
+      double textScale, Duration? longPressDuration)
       : _data = data,
         _targetData = targetData,
         _textScale = textScale,
-        super(targetData.radarTouchData, context);
+        super(targetData.radarTouchData, context, longPressDuration);
 
   RadarChartData get data => _data;
   RadarChartData _data;

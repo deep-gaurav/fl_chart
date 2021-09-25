@@ -11,6 +11,8 @@ class PieChart extends ImplicitlyAnimatedWidget {
   /// Determines how the [PieChart] should be look like.
   final PieChartData data;
 
+  final Duration? longPressDuration;
+
   /// [data] determines how the [PieChart] should be look like,
   /// when you make any change in the [PieChartData], it updates
   /// new values with animation, and duration is [swapAnimationDuration].
@@ -20,6 +22,7 @@ class PieChart extends ImplicitlyAnimatedWidget {
     this.data, {
     Duration swapAnimationDuration = defaultDuration,
     Curve swapAnimationCurve = Curves.linear,
+    this.longPressDuration,
   }) : super(duration: swapAnimationDuration, curve: swapAnimationCurve);
 
   /// Creates a [_PieChartState]
@@ -50,6 +53,7 @@ class _PieChartState extends AnimatedWidgetBaseState<PieChart> {
     return PieChartLeaf(
       data: _pieChartDataTween!.evaluate(animation),
       targetData: showingData,
+      longPressDuration: widget.longPressDuration,
     );
   }
 
