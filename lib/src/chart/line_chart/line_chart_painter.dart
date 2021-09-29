@@ -1227,14 +1227,24 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
     } else {
       tooltipTopPosition = mostTopOffset.dy - tooltipHeight - tooltipData.tooltipMargin;
     }
+    Rect rect;
 
     /// draw the background rect with rounded radius
-    var rect = Rect.fromLTWH(
-      mostTopOffset.dx - (tooltipWidth / 2),
-      tooltipTopPosition,
-      tooltipWidth,
-      tooltipHeight,
-    );
+    if (tooltipData.alwaysCorder) {
+      rect = Rect.fromLTWH(
+        viewSize.width - (tooltipWidth / 2),
+        tooltipTopPosition,
+        tooltipWidth,
+        tooltipHeight,
+      );
+    } else {
+      rect = Rect.fromLTWH(
+        mostTopOffset.dx - (tooltipWidth / 2),
+        tooltipTopPosition,
+        tooltipWidth,
+        tooltipHeight,
+      );
+    }
 
     if (tooltipData.fitInsideHorizontally) {
       if (rect.left < 0) {
